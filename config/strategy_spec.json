@@ -1,0 +1,62 @@
+{
+  "version": "phase6b-v1",
+  "registration_status": "frozen",
+  "registered_at": "2026-10-14",
+  "time_precision": "date",
+  "rules": {
+    "version": "phase6b-v1",
+    "prediction_horizon_days": 5,
+    "rebalance_frequency_days": 5,
+    "anchor": "2022-01-04",
+    "end": "2025-12-31",
+    "classification_threshold": "0.55",
+    "regression_hurdle": "0.001",
+    "max_asset_weight": "0.25",
+    "max_total_weight": "1",
+    "primary_fee_rate": "0.0003",
+    "fee_scenarios": [
+      "0",
+      "0.0003",
+      "0.0005",
+      "0.001"
+    ],
+    "slippage": "0.0002",
+    "signal_time": "t_close_after",
+    "execution_time": "t_plus_1_open"
+  },
+  "families": {
+    "A": [
+      "per_asset",
+      "logistic",
+      "classification"
+    ],
+    "B": [
+      "pooled",
+      "random_forest",
+      "regression"
+    ],
+    "C": null
+  },
+  "source_lock": "config/strategy_sources.json",
+  "source_lock_sha256": "9d2e025e7ab7b57fde858ebf19a017345b751dfb0504878671bb9921cf0dfa45",
+  "protocol": "docs/phase6b-spec.md",
+  "strategy_backtest_performed": false,
+  "holdout_files_opened": false,
+  "model_training_performed": false,
+  "historical_signals_generated": false,
+  "governance": {
+    "selection_status": "development_stage_model_family_selection",
+    "holdout_status": "sealed_candidate",
+    "prior_outer_year_prediction_quality_seen": true,
+    "strategy_pnl_seen_before_freeze": false,
+    "probability_calibration": false,
+    "parameter_search": false,
+    "benchmark_future_open_filtering": false,
+    "missing_prediction": "zero_target_no_imputed_score",
+    "rounding": "weights_floor_18_decimal_places; shares_floor_research_lot",
+    "execution_engine": "accepted_phase6a5_with_provenance_only_adapter",
+    "regression_hurdle_changes_with_fee_scenario": false,
+    "first_rebalance": "first_domestic_session_of_first_frozen_outer_test_window",
+    "calendar_reset_at_year_or_fold": false
+  }
+}

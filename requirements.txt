@@ -1,0 +1,13 @@
+# Public synthetic-suite dependencies; actual versions from the research runtime.
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+matplotlib==3.11.2
+xgboost==3.4.1
+pytest==9.1.1
+PyYAML==6.0.3
+requests==2.34.2
+beautifulsoup4==4.15.0
+scipy==1.18.1
+joblib==1.6.0
+threadpoolctl==3.7.0

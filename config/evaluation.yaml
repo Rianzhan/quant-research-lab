@@ -1,0 +1,25 @@
+schema_version: 1
+version: phase55-v1
+source:
+  model_experiment: config/model_experiment.yaml
+  model_experiment_sha256: 67334142f7136df04542a7744ff316a5078710c8669b9a77dadcfd959601bac9
+  model_manifest: data/processed/models/phase5-v1-5f899c5bc2f44f86/manifest.json
+  model_manifest_sha256: 24211dfeff24cc2a8df8a47b1c212141a244aadcebf93c5917683eb76093e2d8
+  model_code_commit: c2576f4c5b40454f8c21d8e47eb0929c60a19405
+development: {start: '2018-01-01', end: '2025-12-31'}
+classification_threshold: 0.5
+positive_rule: greater_or_equal
+majority_tie_class: 1
+calibration_edges: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+classification_baselines: [majority_class, always_up, training_prior]
+regression_baselines: [zero_return, training_mean]
+levels: [all, fold, asset, fold_asset]
+pairing: exact_keys_or_unavailable
+undefined_metrics: missing_with_reason
+uncertainty: descriptive_only_no_independence_tests
+numerical_tie_tolerance: 1.0e-12
+retraining: false
+model_selection: false
+threshold_search: false
+trading_backtest: false
+holdout_access: false

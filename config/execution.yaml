@@ -1,0 +1,57 @@
+schema_version: 1
+version: phase6a-v1
+development: {start: '2018-01-01', end: '2025-12-31'}
+signal_time: t_close_after
+execution_time: t_plus_1_open
+initial_cash: '100000'
+fee_rate: '0.0003'
+fee_rate_sensitivity: ['0', '0.0003', '0.0005', '0.001']
+slippage: '0.0002'
+epsilon: '0.00000001'
+decimal_precision: 40
+research_lot_size: '1'
+lot_size_basis: unverified_research_unit_not_broker_rule
+sale_proceeds_reuse_policy: next_session_only
+dividend_payment_availability: payment_date_after_close
+same_day_order_priority: sell_then_buy_asset_code_order_id
+missing_open_policy: terminate_at_next_session
+event_crossing_policy: cancel
+stale_policy: last_own_close_same_share_basis_valuation_only
+turnover_definition: effective_traded_notional_over_open_pre_trade_nav
+incomplete_event_policy: reject_affected_window
+orders_source: frozen_manual_fixture
+model_signals_used: false
+strategy_backtest_performed: false
+holdout_access: false
+live_execution_ready: false
+share_event_details:
+  510500-split-2022-08-26:
+    record_date: '2022-08-26'
+    phase: after_close
+    rounding: ceil_whole_share
+    suspended_dates: []
+    applicable: true
+    limitation: Final ratio published 2022-08-29 after effective date; reject crossing window.
+  513100-split-2022-01-13:
+    record_date: '2022-01-12'
+    phase: after_close
+    rounding: exact
+    suspended_dates: ['2022-01-13']
+    applicable: true
+    limitation: Suspension-day close posting; exact intraday registry time unavailable.
+  513500-split-2022-03-29:
+    record_date: '2022-03-28'
+    phase: after_close
+    rounding: exact
+    suspended_dates: ['2022-03-29']
+    applicable: true
+    limitation: Suspension-day close posting; exact intraday registry time unavailable.
+  588000-split-2020-11-09:
+    record_date: '2020-11-09'
+    phase: after_close
+    rounding: null
+    suspended_dates: []
+    applicable: false
+    limitation: Prelisting conversion; cash-only secondary-market account has no entitlement.
+source_lock: config/execution_sources.json
+source_lock_sha256: 4ff154daa3b12a0449ea1649f5480f77ac1512c259c2043cff216f309ce06834

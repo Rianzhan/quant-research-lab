@@ -1,0 +1,26 @@
+schema_version: 1
+version: phase5-v1
+development: {start: '2018-01-01', end: '2025-12-31'}
+source:
+  feature_registration: config/scale_free.yaml
+  feature_registration_sha256: 3e9001147755ffd1359ff588e3b82c9ee44ba1111f803e95cab440ca2f998c59
+  feature_manifest: data/processed/features/phase45-v1-0a9eb107fb50d0b5/manifest.json
+  feature_manifest_sha256: 25732e02017d8a885fbe59130c1f39a1225c5f1fee6a7f2ba3fd5711fe8a9678
+  feature_code_commit: 7766a5a3493933b80aa10b670e7f6ca59191f977
+scopes: [per_asset, pooled]
+model_tasks:
+  - {model: logistic, task: classification}
+  - {model: random_forest, task: classification}
+  - {model: random_forest, task: regression}
+  - {model: xgboost, task: classification}
+  - {model: xgboost, task: regression}
+preprocessing: {logistic: train_only_standard_scaler, random_forest: none, xgboost: none}
+hyperparameters_source: config.yaml.models
+missing_inputs: reject
+classification_single_class: unavailable_all_classifiers
+fit_policy: fresh_model_per_fold_and_scope
+sample_weight: uniform_per_training_row
+early_stopping: false
+hyperparameter_search: false
+probability_calibration: false
+prediction_output: continuous_probability_or_return_only

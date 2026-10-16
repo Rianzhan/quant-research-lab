@@ -1,0 +1,82 @@
+schema_version: 1
+version: phase4-v1
+registration_status: frozen
+registered_at: '2026-10-09T10:16:44+08:00'
+purpose: Fold and label-distribution audit only; never tune from outer-test statistics.
+source:
+  feature_manifest: data/processed/features/phase3-v1-63d97b331713ad2d/manifest.json
+  feature_manifest_sha256: c3cbb3a1a38487cb259e331bb7a872c9042dbab79e32517bc998e9f78fe89ee8
+  feature_code_commit: d26a285debcf541147ca916cf4b907f61e6adbc5
+development:
+  start: '2018-01-01'
+  end: '2025-12-31'
+split:
+  method: expanding_walk_forward
+  train_start: '2018-01-01'
+  test_windows:
+    - {id: test_2022, start: '2022-01-01', end: '2022-12-31'}
+    - {id: test_2023, start: '2023-01-01', end: '2023-12-31'}
+    - {id: test_2024, start: '2024-01-01', end: '2024-12-31'}
+    - {id: test_2025, start: '2025-01-01', end: '2025-12-31'}
+  purge_rule: label_end_date_gte_test_start
+  embargo_days: 0
+  shuffle: false
+eligibility:
+  min_train_samples_per_asset: 252
+  min_test_samples_per_asset: 20
+  paired_asset_universe: true
+  sample_rule: shared_raw_whitelist_complete_and_label_valid
+feature_registration:
+  preserve_phase3_raw_features: true
+  duplicates_removed: [momentum_5d, momentum_20d]
+  shared_raw_whitelist:
+    - return_1d
+    - return_5d
+    - return_20d
+    - momentum_60d
+    - ma_5d
+    - ma_20d
+    - ma_60d
+    - ma_diff_5_20
+    - ma_diff_20_60
+    - volatility_5d
+    - volatility_20d
+    - volume_change_1d
+    - volume_ratio_20d
+    - rsi_14
+    - macd_line
+    - macd_signal
+    - macd_hist
+  per_asset_main: shared_raw_whitelist
+  pooled_status: preregistered_not_materialized
+  pooled_main_whitelist:
+    - return_1d
+    - return_5d
+    - return_20d
+    - momentum_60d
+    - close_over_ma_5d
+    - close_over_ma_20d
+    - close_over_ma_60d
+    - ma_ratio_5_20
+    - ma_ratio_20_60
+    - volatility_5d
+    - volatility_20d
+    - volume_change_1d
+    - volume_ratio_20d
+    - rsi_14
+    - macd_line_over_close
+    - macd_signal_over_close
+    - macd_hist_over_close
+  planned_replacements:
+    ma_5d: {name: close_over_ma_5d, numerator: research_close, denominator: ma_5d, subtract: 1}
+    ma_20d: {name: close_over_ma_20d, numerator: research_close, denominator: ma_20d, subtract: 1}
+    ma_60d: {name: close_over_ma_60d, numerator: research_close, denominator: ma_60d, subtract: 1}
+    ma_diff_5_20: {name: ma_ratio_5_20, numerator: ma_5d, denominator: ma_20d, subtract: 1}
+    ma_diff_20_60: {name: ma_ratio_20_60, numerator: ma_20d, denominator: ma_60d, subtract: 1}
+    macd_line: {name: macd_line_over_close, numerator: macd_line, denominator: research_close, subtract: 0}
+    macd_signal: {name: macd_signal_over_close, numerator: macd_signal, denominator: research_close, subtract: 0}
+    macd_hist: {name: macd_hist_over_close, numerator: macd_hist, denominator: research_close, subtract: 0}
+audit:
+  quantiles: [0.05, 0.25, 0.5, 0.75, 0.95]
+  regression_std_ddof: 1
+  test_statistics_use: quality_and_distribution_audit_only

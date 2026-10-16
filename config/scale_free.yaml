@@ -1,0 +1,29 @@
+schema_version: 1
+version: phase45-v1
+development: {start: '2018-01-01', end: '2025-12-31'}
+source:
+  validation_policy: config/validation.yaml
+  validation_policy_sha256: 4378a39385e31bd28bddaf9fade205cb3a4a68e355bf2bf0c81df65684591c24
+  validation_manifest: data/processed/validation/phase4-v1-c44bbaeed55ddd06/manifest.json
+  validation_manifest_sha256: 904c55caac4856cd3ea8e18c36cf3e9b2284abce919e44a306fcef99ccb52980
+  validation_code_commit: 5fe88b4bfde7e561fdb4b1c1424f61a1716e9861
+model_scopes: [per_asset, pooled]
+sample_contract: unchanged_phase4_membership
+shared_whitelist:
+  - return_1d
+  - return_5d
+  - return_20d
+  - momentum_60d
+  - close_over_ma_5d
+  - close_over_ma_20d
+  - close_over_ma_60d
+  - ma_ratio_5_20
+  - ma_ratio_20_60
+  - volatility_5d
+  - volatility_20d
+  - volume_change_1d
+  - volume_ratio_20d
+  - rsi_14
+  - macd_line_over_close
+  - macd_signal_over_close
+  - macd_hist_over_close

@@ -1,0 +1,235 @@
+schema_version: 2
+experiment:
+  version: v1.1.0-phase25
+  seed: 42
+  python_version: 3.12.14
+  mode: historical_research
+  timezone: Asia/Shanghai
+timing:
+  signal_time: t_close_after
+  execution_time: t_plus_1_open
+  prediction_horizon_days: 5
+  rebalance_frequency_days: 5
+  holding_policy: until_next_rebalance
+universe:
+  registration_status: frozen
+  registered_at: '2026-10-08T11:42:22.879670+08:00'
+  change_reason: Freeze the original eight candidates and original economic selection
+    rationales before any model/backtest; no performance-based replacement.
+  assets:
+  - code: '510300'
+    exchange: SSE
+    name: 沪深300ETF
+    category: china_broad
+    selection_reason: 覆盖中国大盘宽基权益，作为基础权益研究样本。
+    data_available_from: '2012-05-28'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - Eight cash distributions in development window; Eastmoney detail table rejected
+      due to conflict.
+  - code: '510500'
+    exchange: SSE
+    name: 中证500ETF
+    category: china_broad
+    selection_reason: 补充中盘宽基权益，与大盘宽基比较。
+    data_available_from: '2013-03-15'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - 2022-08-26 after-close split changes market quote scale from 2022-08-29; 2015
+      conversion lies before development window.
+  - code: '159915'
+    exchange: SZSE
+    name: 创业板ETF
+    category: growth_technology
+    selection_reason: 覆盖创业板成长风格，比较不同权益风格。
+    data_available_from: '2011-12-09'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - Four zero-volume observations conflict with Tencent; research volume masked,
+      raw values retained.
+  - code: '588000'
+    exchange: SSE
+    name: 科创50ETF
+    category: growth_technology
+    selection_reason: 覆盖科创板科技成长方向；上市较晚，不能补造早期历史。
+    data_available_from: '2020-11-16'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - Listed 2020-11-16; 2020-11-09 conversion occurred before listing; no prelisting
+      prices.
+  - code: '511010'
+    exchange: SSE
+    name: 国泰上证5年期国债ETF
+    category: bond
+    selection_reason: 提供国债资产样本，研究权益以外的价格和风险特征。
+    data_available_from: '2013-04-09'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - Two cash distributions in 2025; raw-price changes are not total returns.
+  - code: '518880'
+    exchange: SSE
+    name: 华安黄金ETF
+    category: gold
+    selection_reason: 提供黄金资产样本，研究多资产组合中的表现差异。
+    data_available_from: '2013-07-29'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - No cash distributions found in audited 2018-2025 summaries; source revisions
+      remain possible.
+  - code: '513100'
+    exchange: SSE
+    name: 纳斯达克100ETF
+    category: cross_border_equity
+    selection_reason: 覆盖跨境成长权益；只使用境内ETF自身日线。
+    data_available_from: '2013-07-31'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - Domestic ETF quotes only; 2022 split and suspension; no foreign underlying prices
+      used.
+  - code: '513500'
+    exchange: SSE
+    name: 博时标普500ETF
+    category: cross_border_equity
+    selection_reason: 覆盖跨境宽基权益，与跨境成长方向比较。
+    data_available_from: '2014-01-15'
+    known_limitations:
+    - Current vendor snapshot; earliest observed date is not automatically a verified
+      listing date.
+    - Candidate pool is not a historical all-ETF universe; survivorship bias remains.
+    - Domestic ETF quotes only; 2022 split and suspension; no foreign underlying prices
+      used.
+  freeze_sha256: c5757c7b9ce4a8de3b7e0e448dfaac8fc12584943ad91a35000d8b26f52c1002
+data:
+  provider_priority:
+  - akshare
+  - baostock
+  start_date: '2018-01-01'
+  end_date: '2025-12-31'
+  interval: daily
+  raw_adjustment: none
+  research_price_policy: unadjusted_event_segmented_v1
+  missing_price_policy: reject_no_backfill
+  download:
+    source: akshare_sina
+    timeout_seconds: 45
+    request_pause_seconds: 1.5
+    probe_start_date: '2025-12-22'
+    probe_end_date: '2025-12-31'
+    coverage_start_date: '1990-01-01'
+    as_of_date: '2026-09-30'
+    price_conflict_tolerance: 0.001
+    volume_conflict_relative_tolerance: 0.02
+    amount_price_tolerance: 0.005
+    suspicious_price_change_fraction: 0.3
+  paths:
+    raw: data/raw
+    processed: data/processed
+    cache: data/cache
+    results: results
+features:
+  return_windows:
+  - 1
+  - 5
+  - 20
+  momentum_windows:
+  - 5
+  - 20
+  - 60
+  moving_average_windows:
+  - 5
+  - 20
+  - 60
+  moving_average_diff_pairs:
+  - - 5
+    - 20
+  - - 20
+    - 60
+  volatility_windows:
+  - 5
+  - 20
+  volatility_ddof: 1
+  volume_change_periods: 1
+  volume_average_window: 20
+  rsi_window: 14
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+labels:
+  tasks:
+  - classification
+  - regression
+  classification_return_threshold: 0.0
+  missing_target_policy: drop_from_supervised_samples
+validation:
+  method: expanding_walk_forward
+  initial_train_years: 4
+  test_years: 1
+  purge_days: 5
+  shuffle: false
+models:
+  scope: per_asset
+  n_jobs: 1
+  logistic:
+    C: 1.0
+    max_iter: 1000
+    solver: lbfgs
+  random_forest:
+    n_estimators: 200
+    max_depth: 5
+    min_samples_leaf: 10
+  xgboost:
+    n_estimators: 200
+    max_depth: 3
+    learning_rate: 0.05
+    subsample: 1.0
+    colsample_bytree: 1.0
+    tree_method: hist
+    device: cpu
+signals:
+  threshold_buy: 0.55
+  regression_method: positive_prediction_weight
+  regression_min_return: 0.0
+portfolio:
+  allocation_method: equal_weight
+  max_asset_weight: 0.25
+  max_total_weight: 1.0
+  initial_capital: 100000.0
+  cash_annual_rate: 0.0
+  allow_short: false
+  allow_leverage: false
+costs:
+  fee_rates:
+  - 0.0
+  - 0.0003
+  - 0.0005
+  - 0.001
+  slippage_rate: 0.0002
+  charging_basis: per_side_traded_notional
+reporting:
+  annualization_days: 252
+  risk_free_rate: 0.0
+  log_level: INFO
+governance:
+  policy_file: config/research_policy.json
+  policy_sha256: bc50de3f42148ba968d4a4d683ac944e2834b9548bea32a03e9d041cb6b8ea37
+  dataset_manifest: data/processed/research/phase25-v1/manifest.json
+  phase2_manifest: data/processed/unadjusted/20261008T031338184572Z-9d5a6f77/manifest.json
+  holdout_start_date: '2026-01-01'
+  holdout_end_date: '2026-09-30'
+  holdout_status: sealed_candidate
+  method_freeze_status: unfrozen
+  research_scope: development_price_features
