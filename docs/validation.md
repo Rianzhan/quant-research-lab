@@ -22,6 +22,6 @@ Tests use generated observations and literal accounting examples. Some tests use
 
 The initial demo used an unsupported order-source string; the engine correctly refused it. The demo was changed to the already-supported `manual_test` input. No engine rule was relaxed. The full public suite was then rerun successfully.
 
-The passing local run used the existing research runtime. A separate clean installation and hosted CI are additional portability checks; this record does not label either successful until their actual results are available. The public requirements pin the direct/test dependencies, not every transitive dependency or operating-system library.
+The passing local run used the existing research runtime. The first hosted Ubuntu CI run installed dependencies and passed `pip check`, but reported 293 passed and 14 failed: the public requirements omitted AKShare metadata needed by snapshot manifests, even when fetches are synthetic. The requirements now include the original installed AKShare version (1.19.1); no test or research logic was weakened. The workflow history records the failed run and subsequent verification. Hosted results must be checked at the exact commit being reviewed. The public requirements pin the direct/test dependencies, not every transitive dependency or operating-system library.
 
 This release does not claim that private raw data, trained models or historical account publications can be reproduced from public files alone. Private pipeline-wide test counts are deliberately not used here.
